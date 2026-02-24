@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="36.695507"
+   height="243.36217"
+   id="svg4458"
+   version="1.1"
+   inkscape:version="0.48.4 r9939"
+   sodipodi:docname="fork.svg">
+  <title
+     id="title4473">Fork</title>
+  <defs
+     id="defs4460" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="11.2"
+     inkscape:cx="15.31495"
+     inkscape:cy="170.05765"
+     inkscape:document-units="px"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="1364"
+     inkscape:window-height="747"
+     inkscape:window-x="0"
+     inkscape:window-y="19"
+     inkscape:window-maximized="1"
+     showguides="true"
+     inkscape:guide-bbox="true"
+     inkscape:object-nodes="true">
+    <sodipodi:guide
+       orientation="0,1"
+       position="27.972942,181.37695"
+       id="guide4494" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata4463">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title>Fork</dc:title>
+        <dc:date>2015-11-14</dc:date>
+        <dc:creator>
+          <cc:Agent>
+            <dc:title>George Snyder</dc:title>
+          </cc:Agent>
+        </dc:creator>
+        <dc:rights>
+          <cc:Agent>
+            <dc:title>None</dc:title>
+          </cc:Agent>
+        </dc:rights>
+        <cc:license
+           rdf:resource="http://creativecommons.org/licenses/publicdomain/" />
+        <dc:subject>
+          <rdf:Bag>
+            <rdf:li>fork</rdf:li>
+            <rdf:li>black</rdf:li>
+            <rdf:li>utensil</rdf:li>
+            <rdf:li>eating</rdf:li>
+            <rdf:li>food</rdf:li>
+            <rdf:li>dining</rdf:li>
+            <rdf:li>silverware</rdf:li>
+          </rdf:Bag>
+        </dc:subject>
+        <dc:description>A black fork</dc:description>
+      </cc:Work>
+      <cc:License
+         rdf:about="http://creativecommons.org/licenses/publicdomain/">
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Reproduction" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#Distribution" />
+        <cc:permits
+           rdf:resource="http://creativecommons.org/ns#DerivativeWorks" />
+      </cc:License>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-56.593396,-49.032049)">
+    <path
+       style="fill:#000000;fill-opacity:1;stroke:none"
+       d="m 59.703319,49.032049 c 0,0 -3.295177,42.949307 -3.101727,60.458981 0.205271,18.57782 12.993048,13.47765 13.588505,25.79845 1.437185,29.7373 -10.317188,94.20471 -8.763602,141.59612 0.409341,12.48661 6.734288,15.50862 13.490037,15.50862 6.755749,0 13.12993,-3.02201 13.539271,-15.50862 1.553587,-47.39141 -10.200786,-111.85882 -8.763601,-141.59612 0.595446,-12.3208 13.383234,-7.22063 13.588504,-25.79845 0.19345,-17.509674 -3.101727,-60.458981 -3.101727,-60.458981 l -2.855559,0 -1.280074,60.508221 c 0,1.48777 -1.477008,1.477 -1.477008,1.477 0,0 -1.427774,-0.004 -1.427774,-1.477 l -2.166289,-60.508221 -2.855548,0 -1.723187,60.508221 c 0,1.50475 -1.477008,1.477 -1.477008,1.477 0,0 -1.427774,0.0187 -1.427774,-1.477 l -1.723186,-60.508221 -2.855549,0 -2.215522,60.508221 c 0,1.51925 -1.378541,1.477 -1.378541,1.477 0,0 -1.477008,-0.006 -1.477008,-1.477 L 62.558878,49.032049 z"
+       id="path4406"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="csssssssccccccccccccccccc" />
+  </g>
+</svg>

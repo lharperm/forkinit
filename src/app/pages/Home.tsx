@@ -47,11 +47,11 @@ export function Home() {
       {/* Latest Reviews Section */}
       <section className="py-10 sm:py-16 bg-stone-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-8 sm:mb-12">
+          <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 mb-8 sm:mb-12">
             <h2 className="text-3xl font-bold text-stone-900">Latest Reviews</h2>
             <Link
               to="/reviews"
-              className="text-pink-600 hover:text-pink-700 font-medium flex items-center gap-2"
+              className="text-pink-600 hover:text-pink-700 font-medium flex items-center gap-2 text-sm sm:text-base"
             >
               View All Reviews
               <span aria-hidden="true">→</span>

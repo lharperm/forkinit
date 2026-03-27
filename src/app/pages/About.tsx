@@ -74,7 +74,7 @@ export function About() {
               {/* Photo */}
               <div className="w-36 h-36 rounded-full overflow-hidden ring-4 ring-white shadow-lg relative z-10">
                 <img
-                  src="https://qbdaxsqwbrjdrvexvdkj.supabase.co/storage/v1/object/public/assets/headshot.jpeg"
+                  src={`${import.meta.env.VITE_SUPABASE_URL}/storage/v1/object/public/assets/headshot.jpeg`}
                   alt="Rachel Arnold"
                   className="w-full h-full object-cover"
                 />

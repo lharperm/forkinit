@@ -5,6 +5,8 @@ import { Contact } from "./pages/Contact";
 import { About } from "./pages/About";
 import { AllReviews } from "./pages/AllReviews";
 import { Layout } from "./components/Layout";
+import { AdminLogin } from "./pages/AdminLogin";
+import { AdminNewPost } from "./pages/AdminNewPost";
 
 export const router = createBrowserRouter([
   {
@@ -18,4 +20,7 @@ export const router = createBrowserRouter([
       { path: "contact", Component: Contact },
     ],
   },
+  // Admin routes (outside Layout — full screen)
+  { path: "/admin", Component: AdminLogin },
+  { path: "/admin/new", Component: AdminNewPost },
 ]);

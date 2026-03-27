@@ -1,27 +1,24 @@
+import React from "react";
 import { useParams, Link } from "react-router";
-import { Clock, Calendar, ArrowLeft, Tag } from "lucide-react";
-import { getBlogPostBySlug } from "../data/blogPosts";
-
-const imageUrls: Record<string, string> = {
-  "sourdough bread rustic": "https://images.unsplash.com/photo-1597604396383-b8ca64ed8fa7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzb3VyZG91Z2glMjBicmVhZCUyMHJ1c3RpY3xlbnwxfHx8fDE3NzAxNDI4MTd8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  "thai green curry bowl": "https://images.unsplash.com/photo-1637184170418-e71f34f3e164?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHx0aGFpJTIwZ3JlZW4lMjBjdXJyeSUyMGJvd2x8ZW58MXx8fHwxNzcwMTcxMzM4fDA&ixlib=rb-4.1.0&q=80&w=1080",
-  "chocolate chip cookies stack": "https://images.unsplash.com/photo-1619149651177-b09092806f1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxjaG9jb2xhdGUlMjBjaGlwJTIwY29va2llcyUyMHN0YWNtfGVufDF8fHx8MTc3MDE1MTA4Nnww&ixlib=rb-4.1.0&q=80&w=1080",
-  "summer salad colorful vegetables": "https://images.unsplash.com/photo-1660744868370-d8ce17a726ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzdW1tZXIlMjBzYWxhZCUyMGNvbG9yZnVsJTIwdmVnZXRhYmxlc3xlbnwxfHx8fDE3NzAyMjYxODN8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  "braised short ribs red wine": "https://images.unsplash.com/photo-1630291078007-1bc14b4b64a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxicmFpc2VkJTIwc2hvcnQlMjByaWJzJTIwcmVkJTIwd2luZXxlbnwxfHx8fDE3NzAyMjYxODR8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  "fresh pasta making flour": "https://images.unsplash.com/photo-1738717201678-412395e65b36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmcmVzaCUyMHBhc3RhJTIwbWFraW5nJTIwZmxvdXJ8ZW58MXx8fHwxNzcwMjI2MTg0fDA&ixlib=rb-4.1.0&q=80&w=1080",
-  // Montreal restaurant images
-  "smoked meat sandwich": "https://images.unsplash.com/photo-1699728088600-6d684acbeada?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxzbW9rZWQlMjBtZWF0JTIwc2FuZHdpY2h8ZW58MXx8fHwxNzcwNDAxMzMzfDA&ixlib=rb-4.1.0&q=80&w=1080",
-  "french bistro elegant": "https://images.unsplash.com/photo-1733574497640-baa7c169678b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxmcmVuY2glMjBiaXN0cm8lMjBlbGVnYW50fGVufDF8fHx8MTc3MDQwMTMzNHww&ixlib=rb-4.1.0&q=80&w=1080",
-  "poutine quebec food": "https://images.unsplash.com/photo-1641573406941-9cd353573369?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxwb3V0aW5lJTIwcXVlYmVjJTIwZm9vZHxlbnwxfHx8fDE3NzA0MDEzMzN8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  "bagel bakery fresh": "https://images.unsplash.com/photo-1756365365171-597d674d27e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxiYWdlbCUyMGJha2VyeSUyMGZyZXNofGVufDF8fHx8MTc3MDQwMTMzNHww&ixlib=rb-4.1.0&q=80&w=1080",
-  "ramen bowl japanese": "https://images.unsplash.com/photo-1635379511574-bc167ca085c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxyYW1lbiUyMGJvd2wlMjBqYXBhbmVzZXxlbnwxfHx8fDE3NzAzMTY1MTR8MA&ixlib=rb-4.1.0&q=80&w=1080",
-  "italian pasta restaurant": "https://images.unsplash.com/photo-1662197480393-2a82030b7b83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxpdGFsaWFuJTIwcGFzdGElMjByZXN0YXVyYW50fGVufDF8fHx8MTc3MDM3MDY0OXww&ixlib=rb-4.1.0&q=80&w=1080",
-  "brunch cafe breakfast": "https://images.unsplash.com/photo-1670710029032-02771d92444d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3Nzg4Nzd8MHwxfHNlYXJjaHwxfHxicnVuY2glMjBjYWZlJTIwYnJlYWtmYXN0fGVufDF8fHx8MTc3MDQwMTMzNXww&ixlib=rb-4.1.0&q=80&w=1080"
-};
+import { Clock, Calendar, ArrowLeft, Tag, MapPin } from "lucide-react";
+import { usePosts } from "../hooks/usePosts";
 
 export function BlogPost() {
   const { slug } = useParams();
-  const post = slug ? getBlogPostBySlug(slug) : undefined;
+  const { posts, loading } = usePosts();
+  const post = posts.find((p) => p.slug === slug);
+
+  if (loading) {
+    return (
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-20 animate-pulse space-y-6">
+        <div className="h-4 bg-stone-200 rounded w-24" />
+        <div className="h-96 bg-stone-200 rounded-2xl" />
+        <div className="h-8 bg-stone-200 rounded w-3/4" />
+        <div className="h-4 bg-stone-200 rounded w-full" />
+        <div className="h-4 bg-stone-200 rounded w-5/6" />
+      </div>
+    );
+  }
 
   if (!post) {
     return (
@@ -41,6 +38,8 @@ export function BlogPost() {
     );
   }
 
+  const heroImage = post.imageUrl;
+
   return (
     <article className="pb-20">
       {/* Back Button */}
@@ -55,15 +54,30 @@ export function BlogPost() {
       </div>
 
       {/* Hero Image */}
-    
+      {heroImage && (
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 mt-6">
+          <div className="h-64 md:h-96 rounded-2xl overflow-hidden shadow-lg">
+            <img
+              src={heroImage}
+              alt={post.title}
+              className="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+      )}
+
       {/* Article Content */}
-      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Category Badge */}
-        <div className="flex items-center gap-2 mb-4">
-          <Tag className="size-4 text-pink-600" />
-          <span className="text-sm font-medium text-pink-600">
-            {post.category}
-          </span>
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 mt-10">
+        {/* Category + Location */}
+        <div className="flex items-center gap-4 mb-4">
+          <div className="flex items-center gap-2">
+            <Tag className="size-4 text-pink-600" />
+            <span className="text-sm font-medium text-pink-600">{post.category}</span>
+          </div>
+          <div className="flex items-center gap-1 text-sm text-stone-500">
+            <MapPin className="size-4" />
+            <span>{post.location}</span>
+          </div>
         </div>
 
         {/* Title */}
@@ -71,7 +85,7 @@ export function BlogPost() {
           {post.title}
         </h1>
 
-        {/* Meta Information */}
+        {/* Meta */}
         <div className="flex items-center gap-6 text-stone-600 pb-8 mb-8 border-b border-stone-200">
           <div className="flex items-center gap-2">
             <Calendar className="size-4" />
@@ -95,19 +109,15 @@ export function BlogPost() {
               <h2 className="text-2xl font-bold text-stone-900 mb-4">
                 {section.heading}
               </h2>
-              <p className="text-stone-700 leading-relaxed">
-                {section.text}
-              </p>
+              <p className="text-stone-700 leading-relaxed">{section.text}</p>
             </section>
           ))}
         </div>
 
-        {/* Call to Action */}
+        {/* CTA */}
         <div className="mt-16 pt-12 border-t border-stone-200">
           <div className="bg-gradient-to-br from-pink-50 to-rose-50 rounded-2xl p-8 text-center">
-            <h3 className="text-2xl font-bold text-stone-900 mb-3">
-              Enjoyed this review?
-            </h3>
+            <h3 className="text-2xl font-bold text-stone-900 mb-3">Enjoyed this review?</h3>
             <p className="text-stone-700 mb-6">
               Check out more restaurant reviews and dining recommendations on the blog!
             </p>

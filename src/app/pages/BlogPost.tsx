@@ -81,7 +81,7 @@ export function BlogPost() {
         </div>
 
         {/* Title */}
-        <h1 className="text-4xl md:text-5xl font-bold text-stone-900 mb-6">
+        <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-stone-900 mb-4 sm:mb-6">
           {post.title}
         </h1>
 

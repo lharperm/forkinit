@@ -11,9 +11,9 @@ export function Home() {
   return (
     <div>
       {/* Hero Section */}
-      <section className="bg-gradient-to-br from-pink-50 to-rose-50 py-16">
+      <section className="bg-gradient-to-br from-pink-50 to-rose-50 py-10 sm:py-16">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-5xl md:text-6xl font-bold text-stone-900 mb-6">
+          <h1 className="text-4xl sm:text-5xl md:text-6xl font-bold text-stone-900 mb-4 sm:mb-6">
             Rachel Arnold's
             <br />
             Stickafork.init
@@ -45,9 +45,9 @@ export function Home() {
       </section>
 
       {/* Latest Reviews Section */}
-      <section className="py-16 bg-stone-50">
+      <section className="py-10 sm:py-16 bg-stone-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between mb-12">
+          <div className="flex items-center justify-between mb-8 sm:mb-12">
             <h2 className="text-3xl font-bold text-stone-900">Latest Reviews</h2>
             <Link
               to="/reviews"

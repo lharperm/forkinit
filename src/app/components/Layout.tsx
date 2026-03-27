@@ -20,7 +20,7 @@ export function Layout() {
             </Link>
 
             {/* Nav links */}
-            <nav className="flex items-center gap-1">
+            <nav className="flex items-center gap-0.5 sm:gap-1">
               {[
                 { to: "/", label: "Home", end: true },
                 { to: "/reviews", label: "Reviews" },
@@ -32,7 +32,7 @@ export function Layout() {
                   to={to}
                   end={end}
                   className={({ isActive }) =>
-                    `px-4 py-2 rounded-lg text-sm font-medium transition-all duration-150 ${
+                    `px-2.5 py-1.5 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-sm font-medium transition-all duration-150 ${
                       isActive
                         ? "bg-pink-50 text-pink-600"
                         : "text-stone-600 hover:text-stone-900 hover:bg-stone-100"
@@ -53,7 +53,7 @@ export function Layout() {
 
       <footer className="bg-stone-900 text-stone-400 mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-          <div className="flex items-center justify-between">
+          <div className="flex flex-col sm:flex-row items-center sm:justify-between gap-3 sm:gap-0">
             <div className="flex items-center gap-2 text-stone-300">
               <ForkLogo size={18} />
               <span className="font-bold text-white text-sm tracking-tight">

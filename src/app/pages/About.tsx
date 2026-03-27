@@ -47,12 +47,12 @@ export function About() {
       </div>
 
       {/* Author Section */}
-      <div className="max-w-4xl mx-auto mb-20">
+      <div className="max-w-4xl mx-auto mb-12 sm:mb-20">
         <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
           <div className="md:flex">
 
             {/* Author Photo with fork pattern background */}
-            <div className="md:w-1/3 relative flex items-center justify-center p-10 overflow-hidden"
+            <div className="md:w-1/3 relative flex items-center justify-center p-6 sm:p-10 overflow-hidden"
               style={{ background: "radial-gradient(circle at 40% 60%, #fce7f3, #fff1f2 70%, #fda4af33)" }}
             >
               {/* Scattered fork icons */}

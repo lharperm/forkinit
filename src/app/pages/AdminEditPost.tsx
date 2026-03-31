@@ -33,7 +33,8 @@ export function AdminEditPost() {
       excerpt: data.excerpt ?? "",
       category: data.category ?? "",
       location: data.location ?? "",
-      address: "",
+      address: data.address ?? "",
+      addressDisplay: data.address ?? "",
       images: data.image_urls ?? (data.image_url ? [data.image_url] : []),
       intro: data.content?.intro ?? "",
       sections: data.content?.sections ?? [{ heading: "", text: "" }],
@@ -60,6 +61,7 @@ export function AdminEditPost() {
       read_time: estimateReadTime(allText),
       category: values.category,
       location: values.location,
+      address: values.addressDisplay || values.address,
       image_url: values.images[0] ?? null,
       image_urls: values.images.length > 0 ? values.images : null,
       coordinates: values.coordinates,
@@ -67,7 +69,6 @@ export function AdminEditPost() {
     };
 
     const { error: dbError } = await supabase.from("posts").update(updates).eq("id", postId);
-
     if (dbError) { setError(dbError.message); setSaving(false); return; }
 
     setSuccess(true);
@@ -88,7 +89,6 @@ export function AdminEditPost() {
             <LogOut className="size-3.5" /> Sign out
           </button>
         </div>
-
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h1 className="text-2xl font-bold text-stone-900 mb-8">Edit Review</h1>
           {initial && (

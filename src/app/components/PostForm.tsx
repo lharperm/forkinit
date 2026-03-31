@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router";
 import { Plus, Trash2, Search, CheckCircle, AlertCircle, Upload, X } from "lucide-react";
 import { supabase } from "../lib/supabase";
 
@@ -14,6 +13,7 @@ export interface PostFormValues {
   category: string;
   location: string;
   address: string;
+  addressDisplay: string;
   images: string[];
   intro: string;
   sections: Section[];
@@ -55,7 +55,9 @@ export function PostForm({ initial, onSubmit, saving, submitLabel, error, succes
   const [address, setAddress] = useState(initial?.address ?? "");
   const [geocoding, setGeocoding] = useState(false);
   const [geocodeResult, setGeocodeResult] = useState<{ lat: number; lng: number; display: string } | null>(
-    initial?.coordinates ? { lat: initial.coordinates[0], lng: initial.coordinates[1], display: "Saved location" } : null
+    initial?.coordinates
+      ? { lat: initial.coordinates[0], lng: initial.coordinates[1], display: initial.addressDisplay ?? "Saved location" }
+      : null
   );
   const [geocodeError, setGeocodeError] = useState<string | null>(null);
 
@@ -105,9 +107,11 @@ export function PostForm({ initial, onSubmit, saving, submitLabel, error, succes
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    if (!geocodeResult) { return; }
+    if (!geocodeResult) return;
     await onSubmit({
-      title, excerpt, category, location, address, images, intro, sections,
+      title, excerpt, category, location, address,
+      addressDisplay: geocodeResult.display,
+      images, intro, sections,
       coordinates: [geocodeResult.lat, geocodeResult.lng],
     });
   }
@@ -117,20 +121,17 @@ export function PostForm({ initial, onSubmit, saving, submitLabel, error, succes
 
   return (
     <form onSubmit={handleSubmit} className="space-y-6">
-      {/* Title */}
       <div>
         <label className={labelClass}>Title *</label>
         <input className={inputClass} value={title} onChange={e => setTitle(e.target.value)} required placeholder="e.g. Schwartz's Deli: Montreal's Legendary Smoked Meat" />
         {title && <p className="text-xs text-stone-400 mt-1">Slug: <span className="font-mono">{slugify(title)}</span></p>}
       </div>
 
-      {/* Excerpt */}
       <div>
         <label className={labelClass}>Excerpt *</label>
         <textarea className={inputClass} value={excerpt} onChange={e => setExcerpt(e.target.value)} required rows={2} placeholder="One or two sentence summary shown on cards" />
       </div>
 
-      {/* Category + Location */}
       <div className="grid grid-cols-2 gap-4">
         <div>
           <label className={labelClass}>Category *</label>
@@ -142,7 +143,6 @@ export function PostForm({ initial, onSubmit, saving, submitLabel, error, succes
         </div>
       </div>
 
-      {/* Address */}
       <div>
         <label className={labelClass}>Restaurant Address (for map pin) *</label>
         <div className="flex gap-2">
@@ -180,7 +180,6 @@ export function PostForm({ initial, onSubmit, saving, submitLabel, error, succes
         )}
       </div>
 
-      {/* Images */}
       <div>
         <label className={labelClass}>Photos <span className="text-stone-400 font-normal ml-1">— first photo is the hero image</span></label>
         {images.length > 0 && (
@@ -222,13 +221,11 @@ export function PostForm({ initial, onSubmit, saving, submitLabel, error, succes
         <input ref={fileInputRef} type="file" accept="image/*" multiple onChange={handleImageUpload} className="hidden" />
       </div>
 
-      {/* Intro */}
       <div>
         <label className={labelClass}>Introduction *</label>
         <textarea className={inputClass} value={intro} onChange={e => setIntro(e.target.value)} required rows={4} placeholder="Opening paragraph that sets the scene..." />
       </div>
 
-      {/* Sections */}
       <div>
         <div className="flex items-center justify-between mb-3">
           <label className={labelClass + " mb-0"}>Content Sections *</label>

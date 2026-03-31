@@ -43,6 +43,7 @@ export function AdminNewPost() {
       read_time: estimateReadTime(allText),
       category: values.category,
       location: values.location,
+      address: values.addressDisplay || values.address,
       image_url: values.images[0] ?? null,
       image_urls: values.images.length > 0 ? values.images : null,
       image_query: "",
@@ -51,12 +52,11 @@ export function AdminNewPost() {
     };
 
     const { error: dbError } = await supabase.from("posts").insert([post]);
-
     if (dbError) { setError(dbError.message); setSaving(false); return; }
 
     setSuccess(true);
     setSaving(false);
-    setTimeout(() => navigate(`/admin/dashboard`), 1500);
+    setTimeout(() => navigate("/admin/dashboard"), 1500);
   }
 
   if (!authChecked) return null;
@@ -72,7 +72,6 @@ export function AdminNewPost() {
             <LogOut className="size-3.5" /> Sign out
           </button>
         </div>
-
         <div className="bg-white rounded-2xl shadow-lg p-8">
           <h1 className="text-2xl font-bold text-stone-900 mb-8">New Review</h1>
           <PostForm

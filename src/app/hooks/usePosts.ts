@@ -3,7 +3,7 @@ import { supabase } from "../lib/supabase";
 import { blogPosts as staticPosts, BlogPost } from "../data/blogPosts";
 
 export function usePosts() {
-  const [posts, setPosts] = useState<BlogPost[]>(staticPosts);
+  const [posts, setPosts] = useState<any[]>(staticPosts);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export function usePosts() {
         return;
       }
 
-      const dbPosts: any[] = data.map((row) => ({
+      const dbPosts = data.map((row) => ({
         slug: row.slug,
         title: row.title,
         excerpt: row.excerpt ?? "",
@@ -28,6 +28,7 @@ export function usePosts() {
         imageQuery: row.image_query ?? "",
         imageUrl: row.image_url ?? undefined,
         imageUrls: row.image_urls ?? undefined,
+        address: row.address ?? undefined,
         coordinates: row.coordinates as [number, number],
         location: row.location ?? "",
         content: row.content ?? { intro: "", sections: [] },

@@ -22,8 +22,24 @@ const pinkIcon = new L.Icon({
   shadowSize: [41, 41],
 });
 
+const fallbackImageUrls: Record<string, string> = {
+  "sourdough bread rustic": "https://images.unsplash.com/photo-1597604396383-b8ca64ed8fa7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "thai green curry bowl": "https://images.unsplash.com/photo-1637184170418-e71f34f3e164?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "chocolate chip cookies stack": "https://images.unsplash.com/photo-1619149651177-b09092806f1a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "summer salad colorful vegetables": "https://images.unsplash.com/photo-1660744868370-d8ce17a726ad?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "braised short ribs red wine": "https://images.unsplash.com/photo-1630291078007-1bc14b4b64a6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "fresh pasta making flour": "https://images.unsplash.com/photo-1738717201678-412395e65b36?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "smoked meat sandwich": "https://images.unsplash.com/photo-1699728088600-6d684acbeada?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "french bistro elegant": "https://images.unsplash.com/photo-1733574497640-baa7c169678b?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "poutine quebec food": "https://images.unsplash.com/photo-1641573406941-9cd353573369?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "bagel bakery fresh": "https://images.unsplash.com/photo-1756365365171-597d674d27e9?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "ramen bowl japanese": "https://images.unsplash.com/photo-1635379511574-bc167ca085c8?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "italian pasta restaurant": "https://images.unsplash.com/photo-1662197480393-2a82030b7b83?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+  "brunch cafe breakfast": "https://images.unsplash.com/photo-1670710029032-02771d92444d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&q=80&w=400",
+};
+
 interface RestaurantMapProps {
-  posts: BlogPost[];
+  posts: (BlogPost & { address?: string; imageUrls?: string[] })[];
   centerCoords?: [number, number];
   zoom?: number;
 }
@@ -55,26 +71,41 @@ export function RestaurantMap({ posts, centerCoords = [45.5017, -73.5673], zoom 
 
     posts.forEach((post) => {
       if (!post.coordinates) return;
+
+      const heroImage = post.imageUrls?.[0] ?? post.imageUrl ?? fallbackImageUrls[post.imageQuery] ?? null;
+      const address = (post as any).address ?? null;
+
       const marker = L.marker(post.coordinates, { icon: pinkIcon }).addTo(map);
 
       marker.bindPopup(`
-        <div class="p-2">
-          <h3 class="font-bold text-base mb-1">${post.title}</h3>
-          <p class="text-sm text-stone-600 mb-2">${post.location}</p>
-          <span class="inline-block px-2 py-1 bg-pink-100 text-pink-700 text-xs rounded">
-            ${post.category}
-          </span>
-          <div class="mt-2">
-            <button
-              type="button"
-              class="mt-2 text-pink-600 hover:text-pink-700 text-sm font-medium cursor-pointer"
-              data-slug="${post.slug}"
-            >
-              Read Review →
-            </button>
+        <div style="width:220px; font-family: sans-serif; overflow: hidden; border-radius: 8px;">
+          ${heroImage ? `
+            <div style="height: 120px; overflow: hidden; margin: -13px -20px 10px -20px;">
+              <img
+                src="${heroImage}"
+                alt="${post.title}"
+                style="width: 100%; height: 100%; object-fit: cover;"
+              />
+            </div>
+          ` : ""}
+          <div style="padding: ${heroImage ? "0" : "4px"} 0 4px 0;">
+            <h3 style="font-weight: 700; font-size: 14px; margin: 0 0 4px 0; line-height: 1.3;">${post.title}</h3>
+            ${address ? `<p style="font-size: 11px; color: #78716c; margin: 0 0 6px 0; line-height: 1.4;">${address}</p>` : `<p style="font-size: 12px; color: #78716c; margin: 0 0 6px 0;">${post.location}</p>`}
+            <span style="display: inline-block; padding: 2px 8px; background: #fce7f3; color: #be185d; font-size: 11px; border-radius: 4px;">
+              ${post.category}
+            </span>
+            <div style="margin-top: 8px;">
+              <button
+                type="button"
+                style="color: #db2777; font-size: 13px; font-weight: 600; cursor: pointer; background: none; border: none; padding: 0;"
+                data-slug="${post.slug}"
+              >
+                Read Review →
+              </button>
+            </div>
           </div>
         </div>
-      `);
+      `, { maxWidth: 240 });
 
       marker.on("popupopen", (e) => {
         const popupEl = e.popup.getElement();

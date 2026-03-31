@@ -165,12 +165,12 @@ export function Contact() {
             <div>
               <h2 className="text-2xl font-bold text-stone-900 mb-6">Contact Information</h2>
               <div className="space-y-6">
-                <div className="flex items-start gap-4">
+                <div className="flex items-center gap-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
                     <Mail className="size-6 text-pink-600" />
                   </div>
                   <div>
-                    <h3 className="font-bold text-stone-900 mb-2">Email</h3>
+                    <h3 className="font-bold text-stone-900 mb-1">Email</h3>
                     <a
                       href="mailto:stickaforkinitpersonal@gmail.com"
                       className="text-stone-600 hover:text-pink-600 transition-colors"
@@ -180,7 +180,7 @@ export function Contact() {
                   </div>
                 </div>
 
-                <div className="flex items-start gap-4">
+                <div className="flex items-center gap-4">
                   <div className="flex-shrink-0 w-12 h-12 bg-pink-100 rounded-lg flex items-center justify-center">
                     <MapPin className="size-6 text-pink-600" />
                   </div>

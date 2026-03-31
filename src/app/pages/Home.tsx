@@ -19,7 +19,7 @@ export function Home() {
             Stickafork.init
           </h1>
           <p className="text-xl text-stone-700 mb-8 max-w-3xl mx-auto">
-            Spoon me! Welcome to Rachel's blog. See her content and catch more of her @tastetoronto. 
+            Spoon me! Welcome to Rachel's food blog. See more on <a href="https://www.instagram.com/stickafork.init/" target="_blank" rel="noopener noreferrer" className="text-pink-600 hover:text-pink-700 underline">Insta</a> and catch more of her food content @tastetoronto.
           </p>
           <p className="text-lg text-stone-600 max-w-2xl mx-auto">
             Currently featuring{" "}

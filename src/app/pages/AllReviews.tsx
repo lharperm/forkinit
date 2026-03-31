@@ -1,5 +1,5 @@
 import { Link } from "react-router";
-import { Clock, Calendar, MapPin, Filter } from "lucide-react";
+import { Clock, Calendar, MapPin } from "lucide-react";
 import { usePosts } from "../hooks/usePosts";
 import { useMemo, useState } from "react";
 import React from "react";
@@ -25,13 +25,12 @@ export function AllReviews() {
           All Restaurant Reviews
         </h1>
         <p className="text-xl text-stone-600">
-          Explore my complete collection of {posts.length} reviews from around the world
+          Explore my complete collection of {posts.length} reviews from around the world!
         </p>
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8">
         <div className="flex items-center gap-2 mb-4">
-          <Filter className="size-5 text-stone-600" />
           <span className="font-medium text-stone-700">Filter by category:</span>
         </div>
         <div className="flex flex-wrap gap-2">

@@ -6,7 +6,9 @@ import { About } from "./pages/About";
 import { AllReviews } from "./pages/AllReviews";
 import { Layout } from "./components/Layout";
 import { AdminLogin } from "./pages/AdminLogin";
+import { AdminDashboard } from "./pages/AdminDashboard";
 import { AdminNewPost } from "./pages/AdminNewPost";
+import { AdminEditPost } from "./pages/AdminEditPost";
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +22,8 @@ export const router = createBrowserRouter([
       { path: "contact", Component: Contact },
     ],
   },
-  // Admin routes (outside Layout — full screen)
   { path: "/admin", Component: AdminLogin },
+  { path: "/admin/dashboard", Component: AdminDashboard },
   { path: "/admin/new", Component: AdminNewPost },
+  { path: "/admin/edit/:slug", Component: AdminEditPost },
 ]);

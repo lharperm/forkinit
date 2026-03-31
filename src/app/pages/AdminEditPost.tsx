@@ -1,26 +1,46 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate, Link } from "react-router";
+import { useNavigate, useParams, Link } from "react-router";
 import { ArrowLeft, LogOut } from "lucide-react";
 import { supabase } from "../lib/supabase";
 import { PostForm, PostFormValues, estimateReadTime } from "../components/PostForm";
 
-function slugify(title: string) {
-  return title.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
-}
-
-export function AdminNewPost() {
+export function AdminEditPost() {
   const navigate = useNavigate();
+  const { slug } = useParams();
   const [authChecked, setAuthChecked] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
+  const [initial, setInitial] = useState<Partial<PostFormValues> | null>(null);
+  const [postId, setPostId] = useState<string | null>(null);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data }) => {
-      if (!data.session) navigate("/admin");
-      else setAuthChecked(true);
+      if (!data.session) { navigate("/admin"); return; }
+      setAuthChecked(true);
+      fetchPost();
     });
-  }, [navigate]);
+  }, [navigate, slug]);
+
+  async function fetchPost() {
+    const { data, error } = await supabase.from("posts").select("*").eq("slug", slug).single();
+    if (error || !data) { setError("Post not found."); setLoading(false); return; }
+
+    setPostId(data.id);
+    setInitial({
+      title: data.title,
+      excerpt: data.excerpt ?? "",
+      category: data.category ?? "",
+      location: data.location ?? "",
+      address: "",
+      images: data.image_urls ?? (data.image_url ? [data.image_url] : []),
+      intro: data.content?.intro ?? "",
+      sections: data.content?.sections ?? [{ heading: "", text: "" }],
+      coordinates: data.coordinates as [number, number] ?? null,
+    });
+    setLoading(false);
+  }
 
   async function handleSignOut() {
     await supabase.auth.signOut();
@@ -28,38 +48,34 @@ export function AdminNewPost() {
   }
 
   async function handleSubmit(values: PostFormValues) {
+    if (!postId) return;
     setSaving(true);
     setError(null);
 
     const allText = values.intro + values.sections.map(s => s.text).join(" ");
-    const slug = slugify(values.title);
-    const date = new Date().toLocaleDateString("en-US", { year: "numeric", month: "long", day: "numeric" });
 
-    const post = {
-      slug,
+    const updates = {
       title: values.title,
       excerpt: values.excerpt,
-      date,
       read_time: estimateReadTime(allText),
       category: values.category,
       location: values.location,
       image_url: values.images[0] ?? null,
       image_urls: values.images.length > 0 ? values.images : null,
-      image_query: "",
       coordinates: values.coordinates,
       content: { intro: values.intro, sections: values.sections },
     };
 
-    const { error: dbError } = await supabase.from("posts").insert([post]);
+    const { error: dbError } = await supabase.from("posts").update(updates).eq("id", postId);
 
     if (dbError) { setError(dbError.message); setSaving(false); return; }
 
     setSuccess(true);
     setSaving(false);
-    setTimeout(() => navigate(`/admin/dashboard`), 1500);
+    setTimeout(() => navigate("/admin/dashboard"), 1500);
   }
 
-  if (!authChecked) return null;
+  if (!authChecked || loading) return null;
 
   return (
     <div className="min-h-screen bg-stone-50 py-10">
@@ -74,15 +90,18 @@ export function AdminNewPost() {
         </div>
 
         <div className="bg-white rounded-2xl shadow-lg p-8">
-          <h1 className="text-2xl font-bold text-stone-900 mb-8">New Review</h1>
-          <PostForm
-            onSubmit={handleSubmit}
-            saving={saving}
-            submitLabel="Publish Review"
-            error={error}
-            success={success}
-            successMessage="Post published! Redirecting..."
-          />
+          <h1 className="text-2xl font-bold text-stone-900 mb-8">Edit Review</h1>
+          {initial && (
+            <PostForm
+              initial={initial}
+              onSubmit={handleSubmit}
+              saving={saving}
+              submitLabel="Save Changes"
+              error={error}
+              success={success}
+              successMessage="Changes saved! Redirecting..."
+            />
+          )}
         </div>
       </div>
     </div>

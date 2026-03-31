@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
 import { supabase } from "../lib/supabase";
-import { BlogPost } from "../data/blogPosts";
+import { blogPosts as staticPosts, BlogPost } from "../data/blogPosts";
 
 export function usePosts() {
-  const [posts, setPosts] = useState<BlogPost[]>([]);
+  const [posts, setPosts] = useState<BlogPost[]>(staticPosts);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -18,7 +18,7 @@ export function usePosts() {
         return;
       }
 
-      const dbPosts: BlogPost[] = data.map((row) => ({
+      const dbPosts: any[] = data.map((row) => ({
         slug: row.slug,
         title: row.title,
         excerpt: row.excerpt ?? "",
@@ -27,12 +27,13 @@ export function usePosts() {
         category: row.category ?? "",
         imageQuery: row.image_query ?? "",
         imageUrl: row.image_url ?? undefined,
+        imageUrls: row.image_urls ?? undefined,
         coordinates: row.coordinates as [number, number],
         location: row.location ?? "",
         content: row.content ?? { intro: "", sections: [] },
       }));
 
-      setPosts(dbPosts);
+      setPosts([...dbPosts, ...staticPosts]);
       setLoading(false);
     }
 
